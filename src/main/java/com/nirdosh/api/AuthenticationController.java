@@ -17,19 +17,21 @@ public class AuthenticationController {
     private UserRepo userRepo;
 
     @RequestMapping("/authentication/{authorization}")
-    public boolean isAuthenticated(@PathVariable String authorization){
+    public User isAuthenticated(@PathVariable String authorization){
         String base64Credentials = authorization.substring("Basic ".length()).trim();
         String credentials = new String(Base64.getDecoder().decode(base64Credentials),
                 Charset.forName("UTF-8"));
         final String[] usernamePasswordPair = credentials.split(":");
         String  userName = usernamePasswordPair[0].trim();
         String  password = usernamePasswordPair[1].trim();
+        String passwordEncoded = Base64.getEncoder().encodeToString(password.getBytes());
 
         User user = userRepo.findByUserName(userName);
-        if(user !=null && user.getPassword().equals(password)){
-            return true;
+        if(user !=null && user.getPassword().equals(passwordEncoded)){
+            return user;
         }
 
-        return false;
+        return null;
     }
+
 }

@@ -8,3 +8,8 @@ target/
 
 /.mvn/
 .DS_Store
+.gitignore
+mvnw
+mvnw.cmd
+pom.xml
+src/

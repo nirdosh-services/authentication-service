@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.util.Base64;
+
 @SpringBootApplication
 @ComponentScan("com.nirdosh")
 @EnableMongoRepositories("com.nirdosh.infrastructure.persistence")
@@ -23,9 +25,12 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
+
+		userRepo.deleteAll();
+
 		UserBuilder userBuilder = new UserBuilder()
 									.userName("manav")
-									.password("wefor2015")
+									.password(Base64.getEncoder().encodeToString("wefor2015".getBytes()))
 									.role("ROLE_FTPADMIN")
 									.role("ROLE_READER");
 		userRepo.save(userBuilder.build());
