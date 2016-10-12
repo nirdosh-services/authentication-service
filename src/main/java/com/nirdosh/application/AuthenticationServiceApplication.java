@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.Base64;
@@ -14,6 +15,7 @@ import java.util.Base64;
 @SpringBootApplication
 @ComponentScan("com.nirdosh")
 @EnableMongoRepositories("com.nirdosh.infrastructure.persistence")
+@Import(SessionConfig.class)
 public class AuthenticationServiceApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
