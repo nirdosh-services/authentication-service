@@ -1,5 +1,7 @@
 package com.nirdosh.api;
 
+import com.nirdosh.domain.model.Token;
+import com.nirdosh.domain.model.TokenGenerator;
 import com.nirdosh.domain.model.User;
 import com.nirdosh.infrastructure.persistence.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,8 @@ public class AuthenticationController {
     private UserRepo userRepo;
 
     @RequestMapping("/authentication/{authorization}")
-    public User isAuthenticated(@PathVariable String authorization){
-        String base64Credentials = authorization.substring("Basic ".length()).trim();
-        String credentials = new String(Base64.getDecoder().decode(base64Credentials),
+    public Token isAuthenticated(@PathVariable String authorization){
+        String credentials = new String(Base64.getDecoder().decode(authorization),
                 Charset.forName("UTF-8"));
         final String[] usernamePasswordPair = credentials.split(":");
         String  userName = usernamePasswordPair[0].trim();
@@ -27,11 +28,12 @@ public class AuthenticationController {
         String passwordEncoded = Base64.getEncoder().encodeToString(password.getBytes());
 
         User user = userRepo.findByUserName(userName);
+        Token token = null;
         if(user !=null && user.getPassword().equals(passwordEncoded)){
-            return user;
+            token = TokenGenerator.nextToken();
         }
 
-        return null;
+        return token ;
     }
 
 }
