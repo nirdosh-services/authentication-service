@@ -1,4 +1,4 @@
-package com.nirdosh.domain.model;
+package com.nirdosh.domain.model.user;
 
 import org.springframework.data.annotation.Id;
 

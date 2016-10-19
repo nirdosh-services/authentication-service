@@ -1,4 +1,4 @@
-package com.nirdosh.domain.model;
+package com.nirdosh.domain.model.auth;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;

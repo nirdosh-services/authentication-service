@@ -1,4 +1,4 @@
-package com.nirdosh.domain.model;
+package com.nirdosh.domain.model.user;
 
 import java.util.ArrayList;
 import java.util.List;

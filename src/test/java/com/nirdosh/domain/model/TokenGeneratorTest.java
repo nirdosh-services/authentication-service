@@ -1,5 +1,8 @@
 package com.nirdosh.domain.model;
 
+import com.nirdosh.domain.model.auth.Token;
+import com.nirdosh.domain.model.auth.TokenGenerator;
+
 import org.testng.annotations.Test;
 
 import java.util.stream.IntStream;

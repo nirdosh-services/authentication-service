@@ -1,6 +1,6 @@
 package com.nirdosh.application;
 
-import com.nirdosh.domain.model.UserBuilder;
+import com.nirdosh.domain.model.user.UserBuilder;
 import com.nirdosh.infrastructure.persistence.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
