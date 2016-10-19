@@ -15,7 +15,6 @@ import java.util.Base64;
 @SpringBootApplication
 @ComponentScan("com.nirdosh")
 @EnableMongoRepositories("com.nirdosh.infrastructure.persistence")
-@Import(SessionConfig.class)
 public class AuthenticationServiceApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {

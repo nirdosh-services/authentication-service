@@ -16,7 +16,9 @@ public class User {
         this.password = password;
         this.roles = roles;
     }
-
+    public String getId(){
+        return id;
+    }
     public String getUserName() {
         return userName;
     }
