@@ -24,18 +24,18 @@ public class AuthenticationController {
     private UserRepo userRepo;
 
     @RequestMapping("/authentication")
-    public String authenticate(@RequestParam String loginName, @RequestParam String password) {
+    public String authenticate(@RequestParam String username, @RequestParam String password) {
 
-        User user = userRepo.findByUserName(loginName);
+        User user = userRepo.findByUserName(username);
         if(user == null || isNotAuthenticated(user, password)){
             throw new WebServiceException("Not authorized");
         }
-        return getJwtToken(loginName, user);
+        return getJwtToken(username, user);
     }
 
-    private String getJwtToken(@RequestParam String loginName, User user) {
+    private String getJwtToken(@RequestParam String username, User user) {
         String  token = Jwts.builder()
-                        .setSubject(loginName)
+                        .setSubject(username)
                         .claim("roles", user.getId())
                         .setIssuedAt(new Date())
                         .signWith(SignatureAlgorithm.HS256, SECRET_KEY)

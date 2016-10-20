@@ -31,7 +31,7 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
 
 		UserBuilder userBuilder = new UserBuilder()
 									.userName("manav")
-									.password(Base64.getEncoder().encodeToString("wefor2015".getBytes()))
+									.password("wefor2015")
 									.role("ROLE_FTPADMIN")
 									.role("ROLE_READER");
 		userRepo.save(userBuilder.build());
