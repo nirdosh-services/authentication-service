@@ -7,22 +7,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
+import javax.xml.ws.WebServiceException;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 @RestController
 public class AuthenticationController {
+
+    public static final String SECRET_KEY = "this_is_my_secret_key_to_test_123";
 
     @Autowired
     private UserRepo userRepo;
 
     @RequestMapping("/authentication")
-    public User isAuthenticated(@RequestParam String loginName, @RequestParam String password) {
+    public String authenticate(@RequestParam String loginName, @RequestParam String password) {
 
         User user = userRepo.findByUserName(loginName);
-
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
+        if(user == null || isNotAuthenticated(user, password)){
+            throw new WebServiceException("Not authorized");
         }
-
-        return null;
+        return getJwtToken(loginName, user);
     }
 
+    private String getJwtToken(@RequestParam String loginName, User user) {
+        String  token = Jwts.builder()
+                        .setSubject(loginName)
+                        .claim("roles", user.getId())
+                        .setIssuedAt(new Date())
+                        .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                        .compact();
+
+        return token;
+    }
+
+    private boolean isNotAuthenticated(User user, String password) {
+        return !user.getPassword().equals(password);
+    }
+
+    @RequestMapping("/validate")
+    public Claims validate(String jwtToken){
+        Claims claims = Jwts.parser()
+                            .setSigningKey(SECRET_KEY)
+                            .parseClaimsJws(jwtToken)
+                            .getBody();
+        return claims;
+    }
 }
