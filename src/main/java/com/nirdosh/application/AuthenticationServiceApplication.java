@@ -2,16 +2,14 @@ package com.nirdosh.application;
 
 import com.nirdosh.domain.model.user.UserBuilder;
 import com.nirdosh.infrastructure.persistence.UserRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import java.util.Base64;
 
 @SpringBootApplication
 @ComponentScan("com.nirdosh")
@@ -32,10 +30,12 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
 		userRepo.deleteAll();
 
 		UserBuilder userBuilder = new UserBuilder()
-									.userName("manav")
-									.password("wefor2015")
-									.role("ROLE_FTPADMIN")
-									.role("ROLE_READER");
+									  .userName("manav")
+									  .password("wefor2015")
+									  .role("ROLE_FTPADMIN")
+									  .role("ROLE_READER")
+									  .role("ROLE_ADMIN");
+
 		userRepo.save(userBuilder.build());
 	}
 }
