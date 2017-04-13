@@ -35,7 +35,6 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
 									  .role("ROLE_FTPADMIN")
 									  .role("ROLE_READER")
 									  .role("ROLE_EDIT");
-
 		userRepo.save(userBuilder.build());
 	}
 }
